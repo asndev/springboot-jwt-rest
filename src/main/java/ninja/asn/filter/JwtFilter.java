@@ -2,6 +2,7 @@ package ninja.asn.filter;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -47,6 +48,8 @@ public class JwtFilter extends GenericFilterBean {
             servletRequest.setAttribute("token", token);
         } catch (SignatureException ex) {
             throw new ServletException("Invalid Token");
+        } catch (MalformedJwtException ex) {
+            throw new ServletException("JWT is malformed");
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
