@@ -31,11 +31,11 @@ public class JwtFilter extends GenericFilterBean {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         String authHeader = req.getHeader(AUTHORIZATION);
 
-        if (authHeader == null || !authHeader.startsWith("Token ")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new ServletException("Not a valid authentication authHeader");
         }
 
-        String compactJws = authHeader.substring(6);
+        String compactJws = authHeader.substring(7);
 
         try {
             Claims token = Jwts.parser()
